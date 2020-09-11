@@ -15,7 +15,7 @@ results <-  as.data.frame(get_model_data(model.glm, type = "eff", terms = c("Gro
                    conf.high = (conf.high*100)) %>%  
             dplyr::select("Group", "pp" = "predicted", "std.error", "conf.low", "conf.high")
 ```
-Review the different type = … but type = "eff" means that you don't have to use a true reference group, but instead you can use a proportion of your data. My goal in the code above was to get predictive probabilities which allows a simple way to explain regression effects. get_model_data comes from library(ggeffects).  
+Review the different type = … but type = "eff" means that you don't have to use a true reference group, but instead you can use a proportion of your data. My goal in the code above was to get predictive probabilities which allows a simple way to explain regression effects. get_model_data comes from library(ggeffects).  I like this method when I'm using ethnicity or or any other time where there's potential for the results to be biased. 
 
 Then you can visualize it using this code: 
 
@@ -36,5 +36,8 @@ ggplot(results, aes(x= Group, y = pp))+
         text=element_text(size = 18, family = "serif") 
   ) 
 ```
+Here is what the code above will produce:
+
+![ProbViz](https://user-images.githubusercontent.com/51967620/92968730-e543e780-f438-11ea-8350-c7199245ecd1.png)
 
 The benefit of visualizing regression coefficients this way is simplicity. We can explain that if the error bars overlap than the effect is nonsignificant, but since they don't here, it is significant. Also the outcome is higher for the dot that's higher up on the plot. This particular example leverages predicted probabilities, but there are other options in the code.  
