@@ -5,7 +5,7 @@ You can run your regression analysis (any variation) and then apply the followin
  
 ```
 model.glm = glm(as.numeric(outcome == "Y") ~ Group + var1 + var2 + Group*var2, 
-                                            family = **specific to your model**, 
+                                            family = gaussian(link = "identity"), #**specific to your model**, 
                                             data = model.df) 
 
 results <-  as.data.frame(get_model_data(model.glm, type = "eff", terms = c("Group"))) %>%              
@@ -15,7 +15,7 @@ results <-  as.data.frame(get_model_data(model.glm, type = "eff", terms = c("Gro
                    conf.high = (conf.high*100)) %>%  
             dplyr::select("Group", "pp" = "predicted", "std.error", "conf.low", "conf.high")
 ```
-Review the different type = … but type = "eff" means that you don't have to use a true reference group, but instead you can use a proportion of your data. My goal in the code above was to get predictive probabilities which allows a simple way to explain regression effects. get_model_data comes from library(ggeffects).  I like this method when I'm using ethnicity or or any other time where there's potential for the results to be biased. 
+Review the different type = … but type = "eff" means that you don't have to use a true reference group, but instead you can use a proportion of your data. My goal in the code above was to get predictive probabilities which allows a simple way to explain regression effects. get_model_data comes from library(ggeffects).  I like this method when I'm using ethnicity or any other time where there's potential for the results to be biased. 
 
 Then you can visualize it using this code: 
 
@@ -23,7 +23,7 @@ Then you can visualize it using this code:
 ggplot(results, aes(x= Group, y = pp))+ 
   geom_errorbar(aes(ymin=conf.low, ymax=conf.high), width=.1) + 
   geom_point(size = 3)+ 
-  labs(y = "% Predicted Probability of Returning", x = "Group")+ 
+  labs(y = "% Predicted Probability", x = "Group")+ 
   scale_y_continuous(limits = c(0, 100), expand = c(0,0))+ 
   theme(axis.line = element_line(color = "black"), 
         axis.title.y = element_text(size =20),  
