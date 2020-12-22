@@ -1,4 +1,4 @@
-# regression-viz
+# Visualizing regression point-estimates in R
 
 You can run your regression analysis (any variation) and then apply the following code: 
 
@@ -38,6 +38,6 @@ ggplot(results, aes(x= Group, y = pp))+
 ```
 Here is what the code above will produce:
 
-![ProbViz](https://user-images.githubusercontent.com/51967620/92968730-e543e780-f438-11ea-8350-c7199245ecd1.png)
+![ProbViz](https://user-images.githubusercontent.com/51967620/102907377-32b9f280-4433-11eb-8abd-5f7a6c45c2ae.png)
 
 The benefit of visualizing regression coefficients this way is simplicity. We can explain that if the error bars overlap than the effect is nonsignificant, but since they don't here, it is significant. Also the outcome is higher for the dot that's higher up on the plot. This particular example leverages predicted probabilities, but there are other options in the code.  
